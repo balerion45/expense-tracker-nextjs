@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { Transaction } from "@/types/Transaction";
 import { auth } from "@clerk/nextjs/server";
 
 export async function getIncomeExpense(): Promise<{
@@ -19,7 +20,9 @@ export async function getIncomeExpense(): Promise<{
       where: { userId },
     });
 
-    const amounts = transactions.map((transaction) => transaction.amount);
+    const amounts = transactions.map(
+      (transaction: Transaction) => transaction.amount
+    );
 
     const income = amounts
       .filter((item) => item > 0)
